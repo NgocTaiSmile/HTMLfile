@@ -1,4 +1,409 @@
-<body>
-  <div>CLICK THE LINK TO DOWNLOAD THE FILE</div>
-  <a href="https://drive.google.com/file/d/1MAuiZhPOzmbggX3L8l6zMrJL2TJIeAfV/view">Download file</a>
-</body<
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Live countdown to 10000 days milestone with visual and numeric indicators."
+    />
+    <link rel="icon" type="image/png" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDUwIDUwIj4KPHBhdGggZmlsbD0id2hpdGUiIGQ9Ik0gMjUgMiBDIDEyLjMwOTI5NSAyIDIgMTIuMzA5Mjk1IDIgMjUgQyAyIDM3LjY5MDcwNSAxMi4zMDkyOTUgNDggMjUgNDggQyAzNy42OTA3MDUgNDggNDggMzcuNjkwNzA1IDQ4IDI1IEMgNDggMTIuMzA5Mjk1IDM3LjY5MDcwNSAyIDI1IDIgeiBNIDI1IDQgQyAzNi42MDk4MjQgNCA0NiAxMy4zOTAxNzYgNDYgMjUgQyA0NiAzNi42MDk4MjQgMzYuNjA5ODI0IDQ2IDI1IDQ2IEMgMTMuMzkwMTc2IDQ2IDQgMzYuNjA5ODI0IDQgMjUgQyA0IDEzLjM5MDE3NiAxMy4zOTAxNzYgNCAyNSA0IHogTSAzNy4wMzkwNjIgMTAuOTkwMjM0IEEgMS4wMDAxIDEuMDAwMSAwIDAgMCAzNi4yNjU2MjUgMTEuMzIyMjY2IEwgMjYuMTgzNTk0IDIyLjI0NDE0MSBBIDMgMyAwIDAgMCAyNSAyMiBBIDMgMyAwIDAgMCAyMiAyNSBBIDMgMyAwIDAgMCAyNSAyOCBBIDMgMyAwIDAgMCAyNS41IDI3Ljk1ODk4NCBMIDI5LjEyNSAzNC40ODYzMjggQSAxLjAwMTA2OTQgMS4wMDEwNjk0IDAgMSAwIDMwLjg3NSAzMy41MTM2NzIgTCAyNy4yNDYwOTQgMjYuOTg0Mzc1IEEgMyAzIDAgMCAwIDI4IDI1IEEgMyAzIDAgMCAwIDI3LjY1MjM0NCAyMy41OTk2MDkgTCAzNy43MzQzNzUgMTIuNjc3NzM0IEEgMS4wMDAxIDEuMDAwMSAwIDAgMCAzNy4wMzkwNjIgMTAuOTkwMjM0IHoiPjwvcGF0aD4KPC9zdmc+Cg==">
+    <title>100&times;100 days</title>
+  </head>
+  <body>
+    <main class="container">
+      <div id="toast" class="toast"></div>
+      <svg
+        aria-label="Progress indicator"
+        class="fade-in-animation"
+        height="200"
+        width="200"
+        viewBox="0 0 20 20"
+      >
+        <circle r="10" cx="10" cy="10" fill="white" />
+        <circle
+          id="pie"
+          r="5"
+          cx="10"
+          cy="10"
+          fill="transparent"
+          stroke="tomato"
+          stroke-width="10"
+          stroke-dasharray="calc(1 * 31.4 / 100) 31.4"
+          transform="rotate(-90) translate(-20)"
+        />
+      </svg>
+
+      <section class="clock fade-in-animation">
+        <h1 id="headline">Countdown from 100&times;100 days</h1>
+        <section id="countdown" aria-live="polite" aria-atomic="true">
+          <ul>
+            <li><span id="days">&nbsp;</span>Days</li>
+            <li><span id="hours">&nbsp;</span>Hours</li>
+            <li><span id="minutes">&nbsp;</span>Minutes</li>
+            <li><span id="seconds">&nbsp;</span>Seconds</li>
+          </ul>
+        </section>
+        <p>Don't just count the days, make the days count.</p>
+      </section>
+
+      <section id="svgContainer">
+        <svg
+          id="cells"
+          aria-label="Progress indicator"
+          width="500"
+          height="500"
+          viewBox="0 0 500 500"
+        >
+          <rect x="0" y="0" width="500" height="500" fill="#ffd54f9e"></rect>
+        </svg>
+      </section>
+      <section id="content" class="emoji" aria-label="Celebration emojis">
+        <span>🥳</span>
+        <span>🎉</span>
+        <span>🎂</span>
+      </section>
+    </main>
+
+    <style>
+      /* general styling */
+      :root {
+        --smaller: 0.75;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html,
+      body {
+        min-height: 100%;
+        margin: 0;
+      }
+
+      body {
+        align-items: center;
+        background-color: #ffd54f;
+        display: flex;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+        padding-top: 4rem;
+        padding-bottom: 4rem;
+      }
+
+      .container {
+        color: #333;
+        margin: 0 auto;
+        text-align: center;
+      }
+
+      h1 {
+        font-weight: normal;
+        letter-spacing: 0.125rem;
+        text-transform: uppercase;
+      }
+
+      li {
+        display: inline-block;
+        font-size: 1.5em;
+        list-style-type: none;
+        padding: 1em;
+        text-transform: uppercase;
+      }
+
+      li span {
+        display: block;
+        font-size: 4.5rem;
+      }
+
+      p {
+        margin-top: 2rem;
+      }
+
+      .emoji {
+        display: none;
+        padding: 1rem;
+      }
+
+      .emoji span {
+        font-size: 4rem;
+        padding: 0 0.5rem;
+      }
+
+      @media all and (max-width: 414px) {
+        li {
+          padding: 0.75em;
+        }
+      }
+
+      @media all and (max-width: 768px) {
+        h1 {
+          font-size: calc(1.5rem * var(--smaller));
+        }
+
+        li {
+          font-size: calc(1.125rem * var(--smaller));
+        }
+
+        li span {
+          font-size: calc(3.375rem * var(--smaller));
+        }
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      .fade-in-animation {
+        opacity: 0;
+        animation: fadeIn 2s ease-in-out forwards;
+        animation-delay: 0.25s;
+      }
+
+      .clock {
+        margin-top: 4rem;
+        margin-bottom: 4rem;
+      }
+
+      svg {
+        max-width: 80vw;
+        height: auto;
+      }
+
+      /* Toast */
+      .toast {
+        visibility: hidden; 
+        min-width: 250px; 
+        background-color: #333;
+        color: #fff; 
+        text-align: center; 
+        border-radius: 5px;
+        overflow: hidden;
+        padding: 1.25rem; 
+        position: fixed; 
+        z-index: 1;
+        transform: translateX(-50%);
+        left: 50%; 
+        bottom: 3rem;
+        font-size: 1rem;
+      }
+
+      .toast.show {
+        visibility: visible; /* Show the toast */
+        animation: fadein 0.5s, fadeout 1s 4s; /* Fade in and then fade out */
+      }
+
+      @keyframes fadein {
+        from {
+          bottom: 0;
+          opacity: 0;
+        }
+        to {
+          bottom: 3rem;
+          opacity: 1;
+        }
+      }
+
+      @keyframes fadeout {
+        from {
+          bottom: 3rem;
+          opacity: 1;
+        }
+        to {
+          bottom: 0;
+          opacity: 0;
+        }
+      }
+    </style>
+
+    <script>
+      (function () {
+
+/* setup configurationa and global variable */
+        window.requestAnimationFrame(render);
+
+        const second = 1000,
+          minute = second * 60,
+          hour = minute * 60,
+          day = hour * 24;
+        const countDown = getFrom() || new Date("June 8, 2049").getTime();
+        let lastCurrentDays = 0;
+        let lastSeconds = 0;
+
+/* object countDown clock
+    - getFrom -> countDown
+    - renderCells */
+        function render() {
+          const distance = countDown - new Date().getTime();
+          const seconds = distance / second;
+
+          if (seconds != lastSeconds) {
+            const daysBetween = Math.floor(distance / day);
+            document.title = `${daysBetween} days left`;
+
+            const currentDays = 10000 - daysBetween;
+
+            if (currentDays != lastCurrentDays) {
+              const percentage = (1 - daysBetween / 10000) * 100;
+              document
+                .getElementById("pie")
+                .setAttribute(
+                  "stroke-dasharray",
+                  `calc(${percentage} * 31.4 / 100) 31.4`
+                );
+
+              renderCells(10000 - daysBetween);
+
+              lastCurrentDays = currentDays;
+            }
+
+            document.getElementById("days").innerText = Math.floor(distance / day);
+            document.getElementById("hours").innerText = Math.floor((distance % day) / hour);
+            document.getElementById("minutes").innerText = Math.floor(
+              (distance % hour) / minute
+            );
+            document.getElementById("seconds").innerText = Math.floor(
+              (distance % minute) / second
+            );
+
+            //do something later when date is reached
+            if (distance < 0) {
+              document.getElementById("headline").innerText = "It's time!";
+              document.getElementById("countdown").style.display = "none";
+              document.getElementById("content").style.display = "block";
+            }
+          }
+
+          lastSeconds = seconds;
+
+          setTimeout(() => {
+            window.requestAnimationFrame(render);
+          }, 3000);
+        }
+
+/*object mesh */
+        function renderCells(fill) {
+          const size = 5; // Size of each square
+          const rows = 100;
+          const cols = 100;
+          const rowSize = size * cols;
+          const colSize = size * rows;
+
+          const svgNS = "http://www.w3.org/2000/svg";
+          let svg = document.createElementNS(svgNS, "svg");
+          svg.setAttribute("id", "cells");
+          svg.setAttribute("aria-label", "Progress indicator");
+          svg.setAttribute("width", `${rowSize}`);
+          svg.setAttribute("height", `${colSize}`);
+          svg.setAttribute("viewBox", `0 0 ${rowSize} ${colSize}`);
+
+          for (let i = 0; i < rows; i++) {
+            for (let j = 0; j < cols; j++) {
+              let square = document.createElementNS(svgNS, "rect");
+              square.setAttribute("x", j * size);
+              square.setAttribute("y", i * size);
+              square.setAttribute("width", size);
+              square.setAttribute("height", size);
+              if (fill > 0) {
+                square.setAttribute("fill", "tomato");
+                fill -= 1;
+              } else {
+                square.setAttribute("fill", "white");
+              }
+
+              square.setAttribute("stroke", "yellow");
+
+              svg.appendChild(square);
+            }
+          }
+
+          // Append the SVG to the container
+          document
+            .getElementById("svgContainer")
+            .replaceChild(svg, document.getElementById("cells"));
+        }
+      
+        function getFrom() {
+          const fromParam = getQueryParam("from");
+          return fromParam ? addDaysToDate(fromParam, 10000) : null;
+
+          function addDaysToDate(dateStr, daysToAdd) {
+          const date = new Date(dateStr);
+          if (!isNaN(date.getTime())) {
+            let timestamp = date.getTime();
+            const msToAdd = daysToAdd * 24 * 60 * 60 * 1000;
+            return new Date(timestamp + msToAdd);
+          } else {
+            return null; }
+          }
+        
+          function getQueryParam(param) {
+            const queryParams = new URLSearchParams(window.location.search);
+            const paramValue = queryParams.get(param);
+            return paramValue;
+          }
+        }
+        
+/* object toast
+    localStorage.getItem("last_visit")
+    calculate how many years month day time left */
+        document.addEventListener("DOMContentLoaded", function () {
+
+        const now = new Date();
+        const lastVisit = localStorage.getItem("last_visit");
+
+        if (lastVisit) {
+          const lastVisitDate = new Date(parseInt(lastVisit));
+          const diff = now - lastVisitDate;
+
+          const diffDays = Math.floor(diff / (1000 * 60 * 60 * 24));
+          const diffHours = Math.floor(
+            (diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+          );
+          const diffMinutes = Math.floor(
+            (diff % (1000 * 60 * 60)) / (1000 * 60)
+          );
+          const diffSeconds = Math.floor((diff % (1000 * 60)) / 1000); // Calculate seconds
+
+          let message = "";
+          if (diffDays > 0) {
+            message += `${diffDays} day${diffDays > 1 ? "s" : ""}, `;
+          }
+          if (diffHours > 0) {
+            message += `${diffHours} hour${diffHours > 1 ? "s" : ""}, `;
+          }
+          if (diffMinutes > 0) {
+            message += `${diffMinutes} minute${diffMinutes > 1 ? "s" : ""}, `;
+          }
+          if (diffSeconds > 0 || message === "") {
+            message += `${diffSeconds} second${diffSeconds !== 1 ? "s" : ""}`;
+          }
+
+          message = message.trim().replace(/,$/, "");
+          showToast(message + " since your last visit!");
+        }
+
+        localStorage.setItem("last_visit", now.getTime());
+
+        function showToast(message) {
+          const toast = document.getElementById("toast");
+          toast.textContent = message;
+          toast.className = "toast show";
+
+          setTimeout(function(){
+              toast.className = toast.className.replace("show", "");
+          }, 3000);
+        }
+        });
+
+      })();
+    </script>
+  </body>
+</html>
